@@ -22,10 +22,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * @ModelAttribute 으로 binding error 발생시 BindException 발생한다.
-     * @RequestBody @Valid 바인딩 오류(HttpMessageConverter binding) 시 발생하는 MethodArgumentNotValidException 도 BindException 을 확장한다.
-     */
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponseDto<Map<String, String>>> handleBindException(BindException e, HttpServletRequest request) {
         printLog(e, request);
@@ -49,7 +45,6 @@ public class GlobalExceptionHandler {
         return createErrorResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, errorInfoMap);
     }
 
-    /** @RequestParam 파라미터 누락*/
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ErrorResponseDto<String>> handleMissingServletRequestParameterException(MissingServletRequestParameterException e, HttpServletRequest request) {
         printLog(e, request);
@@ -57,35 +52,30 @@ public class GlobalExceptionHandler {
         return createErrorResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, message);
     }
 
-    // BusinessException 을 상속한 다른 Custom Exception 에도 적용된다.
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<ErrorResponseDto<String>> handleBusinessException(IllegalArgumentException e, HttpServletRequest request){
         printLog(e, request);
         return createErrorResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
-    // ENUM 변환실패, 날짜타입에 2999-15-99 와 같은 잘못된 값이 들어올 때 발생
     @ExceptionHandler({HttpMessageNotReadableException.class})
     public ResponseEntity<ErrorResponseDto<String>> handleInvalidFormatException(HttpMessageNotReadableException e, HttpServletRequest request){
         printLog(e, request);
         return createErrorResponse(ErrorCode.HTTP_MESSAGE_NOT_READABLE);
     }
 
-    // BusinessException 을 상속한 다른 Custom Exception 에도 적용된다.
     @ExceptionHandler({BusinessException.class})
     public ResponseEntity<ErrorResponseDto<String>> handleBusinessException(BusinessException e, HttpServletRequest request){
         printLog(e, request);
         return createErrorResponse(e.getStatusCode(), e.getHttpStatus(), e.getMessage());
     }
 
-    // 비즈니스 로직이 아닌 애플리케이션 서비스 로직상 예외
     @ExceptionHandler({AppServiceException.class})
     public ResponseEntity<ErrorResponseDto<String>> handleAppServiceException(AppServiceException e, HttpServletRequest request){
         printLog(e, request);
         return createErrorResponse(e.getStatusCode(), e.getHttpStatus(), e.getMessage());
     }
 
-    // 예상하지 못한 예외 발생 시, 예외 로그 전체를 서버에 남기고, 로그 자체를 모두 클라이언트에 전송한다.
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDto<String>> handleException(Exception e, HttpServletRequest request){
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
