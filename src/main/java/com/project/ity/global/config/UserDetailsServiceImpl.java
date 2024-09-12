@@ -2,6 +2,7 @@ package com.project.ity.global.config;
 
 import com.project.ity.domain.user.dto.User;
 import com.project.ity.domain.user.repository.UserRepository;
+import com.project.ity.domain.user.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        // 사용자 정보를 이메일로 조회
         Optional<User> optionalUser = userRepository.findByUserId(userId);
 
         if (optionalUser.isEmpty()) {
@@ -27,10 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         User user = optionalUser.get();
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getUserId(),
-                user.getPassword(),
-                user.getAuthorities()
-        );
+        return new CustomUserDetails(user);
     }
 }
