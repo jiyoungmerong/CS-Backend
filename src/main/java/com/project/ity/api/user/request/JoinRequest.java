@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 public class JoinRequest {
@@ -22,6 +24,6 @@ public class JoinRequest {
     @NotBlank(message = "닉네임을 입력해주세요.")
     private String nickName;
 
-    private String skill;
+    private List<Long> skillIds;
 
 }
