@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,7 +36,10 @@ public class User extends BaseTimeEntity implements Serializable {
     @Column(nullable = false, unique = true)
     private String nickName;
 
-    private String skill; // todo list 형식으로 변환해야함 1:n 형식으로 변경
+    @ElementCollection
+    @CollectionTable(name = "user_skill", joinColumns = @JoinColumn(name = "userId"))
+    @Column(name = "skillId")
+    private List<Long> skillList = new ArrayList<>();
 
     @Column(length = 1000)
     private String refreshToken;
@@ -68,12 +73,12 @@ public class User extends BaseTimeEntity implements Serializable {
 
     @Builder
     private User(String userId, String password, String phoneNumber,
-                 String nickName, String skill){
+                 String nickName, List<Long> skillList){
         this.userId = userId;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.nickName = nickName;
-        this.skill = skill;
+        this.skillList = skillList;
     }
 
 }
