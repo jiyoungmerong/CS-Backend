@@ -1,6 +1,6 @@
 package com.project.ity.domain.skill.service;
 
-import com.project.ity.domain.skill.dto.Skill;
+import com.project.ity.api.skill.response.SkillListResponse;
 import com.project.ity.domain.skill.repository.SkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 public class SkillService {
     private final SkillRepository skillRepository;
 
-    public List<String> selectAllSkillNames() {
+    public List<SkillListResponse> selectAllSkillList() {
         return skillRepository.findAll()
                 .stream()
-                .map(Skill::getSkillName)
+                .map(skill -> SkillListResponse.of(skill.getId(), skill.getSkillName()))
                 .collect(Collectors.toList());
     }
 }
