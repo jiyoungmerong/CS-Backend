@@ -25,8 +25,13 @@ public enum ErrorCode {
     ID_ALREADY_REGISTERED(409, "이미 가입된 아이디입니다."),
     NUMBER_ALREADY_REGISTERED(409, "이미 가입된 번호입니다."),
     NICKNAME_ALREADY_REGISTERED(409, "이미 가입된 닉네임입니다."),
-
     USER_NOT_FOUND(404, "해당 사용자가 존재하지 않습니다."),
+
+    // CS Topic
+    NOT_REGISTER_CS_TOPIC(404, "존재하지 않는 CS 주제입니다."),
+
+    //Skill
+    NOT_EXIT_SKILL(404, "존재하지 않는 스킬 목록입니다.")
     ;
 
     private final int statusCode;
