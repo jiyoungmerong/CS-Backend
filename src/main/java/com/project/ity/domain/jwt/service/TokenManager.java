@@ -36,12 +36,12 @@ public class TokenManager {
         this.refreshTokenExpMillis = refreshTokenExpMillis;
     }
 
-    public TokenDto createTokenDto(String audience) {
+    public TokenDto createTokenDto(String userId) {
         Date accessTokenExp = createAccessTokenExp();
         Date refreshTokenExp = createRefreshTokenExp();
 
-        String accessToken = createAccessToken(audience, accessTokenExp);
-        String refreshToken = createRefreshToken(audience, refreshTokenExp);
+        String accessToken = createAccessToken(userId, accessTokenExp);
+        String refreshToken = createRefreshToken(userId, refreshTokenExp);
         return TokenDto.builder()
                 .authScheme(AuthScheme.BEARER.getType())
                 .accessToken(accessToken)
@@ -59,10 +59,10 @@ public class TokenManager {
         return new Date(System.currentTimeMillis() + refreshTokenExpMillis);
     }
 
-    private String createAccessToken(String audience, Date exp) {
+    private String createAccessToken(String userId, Date exp) {
         return Jwts.builder()
                 .setSubject(TokenType.ACCESS.name())
-                .setAudience(audience)
+                .setAudience(userId)
                 .setIssuedAt(new Date())
                 .setExpiration(exp)
                 .signWith(key, SignatureAlgorithm.HS512)
@@ -70,10 +70,10 @@ public class TokenManager {
                 .compact();
     }
 
-    private String createRefreshToken(String audience, Date exp) {
+    private String createRefreshToken(String userId, Date exp) {
         return Jwts.builder()
                 .setSubject(TokenType.REFRESH.name())
-                .setAudience(audience)
+                .setAudience(userId)
                 .setIssuedAt(new Date())
                 .setExpiration(exp)
                 .signWith(key, SignatureAlgorithm.HS512)

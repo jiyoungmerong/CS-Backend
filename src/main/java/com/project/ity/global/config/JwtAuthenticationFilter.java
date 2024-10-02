@@ -58,9 +58,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String audience = claims.getAudience();
+        String userId = claims.getAudience(); // userId 추출
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(audience, null, null);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userId, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
     }
 }
