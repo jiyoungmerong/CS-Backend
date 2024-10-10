@@ -21,6 +21,9 @@ public enum ErrorCode {
     // 인증 - 로그인 시도
     MISMATCHED_SIGNIN_INFO(400, "잘못된 로그인 정보입니다."),
 
+    // Oauth2
+    KAKAO_REQUEST_FAIL(500, "카카오 API 요청 실패"),
+
     // 회원가입 시 중복 체크
     ID_ALREADY_REGISTERED(409, "이미 가입된 아이디입니다."),
     NUMBER_ALREADY_REGISTERED(409, "이미 가입된 번호입니다."),
@@ -30,8 +33,16 @@ public enum ErrorCode {
     // CS Topic
     NOT_REGISTER_CS_TOPIC(404, "존재하지 않는 CS 주제입니다."),
 
+    // CS Answer
+    ALREADY_EXIST_CS_ANSWER(409, "이미 작성한 답변이 존재합니다."),
+    NOT_EXISTS_RANKING(404, "랭킹이 존재하지 않습니다."),
+
+    // like
+    ALREADY_EXISTS_LIKE(409, "이미 공감을 누른 답변입니다."),
+    NOT_EXISTS_LIKE(404, "공감을 찾을 수 없습니다."),
+
     //Skill
-    NOT_EXIT_SKILL(404, "존재하지 않는 스킬 목록입니다.")
+    NOT_EXIT_SKILL(404, "스킬 목록이 존재하지 않습니다."),
     ;
 
     private final int statusCode;
