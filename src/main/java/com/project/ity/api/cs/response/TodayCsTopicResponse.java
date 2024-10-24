@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class TodayCsTopicResponse {
-    private String titleContent;
+    private String csSubject;
 
-    public static TodayCsTopicResponse of(String titleContent) {
-        return new TodayCsTopicResponse(titleContent);
+    public static TodayCsTopicResponse of(String csSubject) {
+        return new TodayCsTopicResponse(csSubject);
     }
 }
