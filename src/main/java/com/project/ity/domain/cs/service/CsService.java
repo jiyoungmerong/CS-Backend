@@ -1,6 +1,6 @@
 package com.project.ity.domain.cs.service;
 
-import com.project.ity.api.cs.response.TodayCsTopicResponse;
+import com.project.ity.api.cs.response.CsTopicResponse;
 import com.project.ity.domain.cs.repository.CsRepository;
 import com.project.ity.global.exception.ErrorCode;
 import com.project.ity.global.exception.exceptions.BusinessException;
@@ -19,14 +19,14 @@ public class CsService {
 
     private static final LocalDate START_DATE = LocalDate.of(2024, 10, 24);
 
-    public TodayCsTopicResponse selectCsTopic() {
+    public CsTopicResponse selectCsTopic() {
         long id = calculateDailyTopicId();
 
         String todayContent = csRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_REGISTER_CS_TOPIC))
                 .getCsSubject();
 
-        return TodayCsTopicResponse.of(todayContent);
+        return CsTopicResponse.of(todayContent);
     }
 
     private long calculateDailyTopicId() {

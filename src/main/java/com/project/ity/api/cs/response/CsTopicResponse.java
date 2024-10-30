@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class TodayCsTopicResponse {
+public class CsTopicResponse {
     private String csSubject;
 
-    public static TodayCsTopicResponse of(String csSubject) {
-        return new TodayCsTopicResponse(csSubject);
+    public static CsTopicResponse of(String csSubject) {
+        return new CsTopicResponse(csSubject);
     }
 }

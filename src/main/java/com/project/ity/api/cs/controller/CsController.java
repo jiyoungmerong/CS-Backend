@@ -27,8 +27,8 @@ public class CsController {
     private final CsAnswerCommentService csAnswerCommentService;
 
     @GetMapping("/cs-topics/today")
-    public RspTemplate<TodayCsTopicResponse> selectTodayCsTopic() {
-        TodayCsTopicResponse todayCsTopic = csService.selectCsTopic();
+    public RspTemplate<CsTopicResponse> selectTodayCsTopic() {
+        CsTopicResponse todayCsTopic = csService.selectCsTopic();
 
         return new RspTemplate<>(HttpStatus.OK, "오늘의 CS 주제를 성공적으로 불러왔습니다.", todayCsTopic);
     }
